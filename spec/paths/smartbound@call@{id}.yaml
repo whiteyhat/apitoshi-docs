@@ -5,6 +5,13 @@ post:
     for the computational cost.
   tags:
     - SmartBound
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: ID of the SmartBound
   requestBody:
     content:
       application/json:
