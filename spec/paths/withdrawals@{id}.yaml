@@ -1,0 +1,29 @@
+get:
+  summary: Get withdrawal info
+  description: Receive information about a specific withdrawal operation.
+  tags:
+    - Withdrawals
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Id of the withdrawal operation
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                default: true
+              data:
+                $ref: '#/components/schemas/WithdrawResponse'
+    '400':
+      $ref: '#/components/responses/BadRequest'
+    '401':
+      $ref: '#/components/responses/UnauthorizedError'

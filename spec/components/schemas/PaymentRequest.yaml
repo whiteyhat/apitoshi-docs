@@ -1,0 +1,14 @@
+type: object
+properties:
+  description:
+    $ref: '#/components/schemas/Description'
+  amount:
+    $ref: '#/components/schemas/Amount'
+  expirationTime:
+    $ref: '#/components/schemas/ExpirationTime'
+  currency:
+    $ref: '#/components/schemas/Currency'
+  callback_url:
+    $ref: '#/components/schemas/CallbackUrl'
+  success_url:
+    $ref: '#/components/schemas/CallbackUrl'

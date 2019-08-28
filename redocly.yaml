@@ -1,0 +1,8 @@
+specFileName: api.openapi.yaml
+apiTitle: APItoshi
+splitSpec: true
+codeSamples: false
+swaggerUI: true
+travis: true
+repo: whiteyhat/apitoshi-docs
+oasVersion: 3.0.2

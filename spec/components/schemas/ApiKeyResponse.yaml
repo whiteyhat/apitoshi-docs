@@ -1,0 +1,8 @@
+type: object
+properties:
+  api_key:
+    type: string
+    example: b880d27b-794b-4967-910c-172d97e9e10c
+  role:
+    type: string
+    example: invoices

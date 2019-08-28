@@ -1,0 +1,24 @@
+get:
+  description: List the paid invoices.
+  summary: Get paid payments
+  tags:
+    - Payments
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                default: true
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PaymentResponse'
+    '400':
+      $ref: '#/components/responses/BadRequest'
+    '401':
+      $ref: '#/components/responses/UnauthorizedError'

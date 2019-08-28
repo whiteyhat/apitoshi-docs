@@ -1,0 +1,10 @@
+type: object
+properties:
+  success:
+    type: boolean
+    default: false
+  data:
+    type: object
+    properties:
+      message:
+        type: string

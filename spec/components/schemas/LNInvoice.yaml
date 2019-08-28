@@ -1,0 +1,6 @@
+type: object
+properties:
+  expires_at:
+    type: number
+  pay_req:
+    type: string

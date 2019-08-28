@@ -1,0 +1,29 @@
+get:
+  summary: Get payment info
+  description: Receive information about a specific payment.
+  tags:
+    - Payments
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Id of the payment
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                default: true
+              data:
+                $ref: '#/components/schemas/PaymentResponse'
+    '400':
+      $ref: '#/components/responses/BadRequest'
+    '401':
+      $ref: '#/components/responses/UnauthorizedError'

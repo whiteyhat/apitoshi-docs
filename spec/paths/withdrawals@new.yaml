@@ -1,0 +1,23 @@
+post:
+  summary: Withdraw balance
+  description: >-
+    Issue a withdrawal operation which extracts the funds to your Bitcoin wallet
+    or through a lightnign invoice.
+  tags:
+    - Withdrawals
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/WithdrawRequest'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WithdrawResponse'
+    '400':
+      $ref: '#/components/responses/BadRequest'
+    '401':
+      $ref: '#/components/responses/UnauthorizedError'

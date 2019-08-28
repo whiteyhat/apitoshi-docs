@@ -1,0 +1,23 @@
+type: object
+properties:
+  id:
+    type: string
+  description:
+    type: string
+  created_at:
+    type: number
+  status:
+    $ref: '#/components/schemas/TxStatus'
+  amount:
+    $ref: '#/components/schemas/Amount'
+  currency:
+    $ref: '#/components/schemas/Currency'
+  fiat_value:
+    type: number
+  lightning_invoice:
+    $ref: '#/components/schemas/LNInvoice'
+  chain_invoice:
+    type: object
+    properties:
+      address:
+        $ref: '#/components/schemas/Address'

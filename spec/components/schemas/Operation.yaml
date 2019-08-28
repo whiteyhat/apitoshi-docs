@@ -1,0 +1,13 @@
+type: object
+properties:
+  id:
+    type: string
+  created_at:
+    type: string
+  status:
+    type: string
+  amount:
+    type: number
+  type:
+    type: string
+    example: Invoice

@@ -1,0 +1,5 @@
+description: >-
+  An API key is required to authorize requests with a specific role. If you
+  don't have an API key, please register on Elixir.
+type: http
+scheme: bearer

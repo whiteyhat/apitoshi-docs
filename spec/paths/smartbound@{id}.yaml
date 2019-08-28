@@ -1,0 +1,98 @@
+get:
+  summary: Get SmartBound information
+  description: Retrieves information about a SmartBound by its ID
+  tags:
+    - SmartBound
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: ID of the SmartBound
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                default: true
+              data:
+                $ref: '#/components/schemas/SmartBoundResponseGet'
+    '400':
+      $ref: '#/components/responses/BadRequest'
+    '401':
+      $ref: '#/components/responses/UnauthorizedError'
+put:
+  summary: Update SmartBound
+  description: Updates amount and alias of a SmartBound
+  tags:
+    - SmartBound
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: ID of the SmartBound
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            alias:
+              type: string
+            amount:
+              type: number
+              description: Amount to refill the SmartBound
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                default: true
+              data:
+                type: object
+    '400':
+      $ref: '#/components/responses/BadRequest'
+    '401':
+      $ref: '#/components/responses/UnauthorizedError'
+delete:
+  summary: Delete SmartBound
+  description: Deletes a SmartBound by its ID
+  tags:
+    - SmartBound
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: ID of the SmartBound
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                default: true
+              data:
+                type: object
+    '400':
+      $ref: '#/components/responses/BadRequest'
+    '401':
+      $ref: '#/components/responses/UnauthorizedError'
