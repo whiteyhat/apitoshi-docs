@@ -25,6 +25,9 @@ info:
     url: 'https://studio.satoshis.games/'
 servers:
   - url: 'https://apitoshi.info'
+    description: Future URL
+  - url: 'https://57efa5ynx9.execute-api.eu-west-2.amazonaws.com/prod'
+    description: Default URL
 tags:
   - name: Payments
     description: APItoshi allow users to create payments seamlessly on lightning ⚡
@@ -316,6 +319,13 @@ paths:
       description: Call SmartContract through Lightning Network. It uses the balance assigned for the computational cost.
       tags:
         - SmartBound
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID of the SmartBound
       requestBody:
         content:
           application/json:
