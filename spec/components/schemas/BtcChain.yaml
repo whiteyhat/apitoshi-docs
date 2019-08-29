@@ -1,0 +1,5 @@
+type: string
+enum:
+  - onchain
+  - ln
+description: On chain or Lightning

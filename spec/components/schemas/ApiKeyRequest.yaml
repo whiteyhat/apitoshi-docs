@@ -1,0 +1,12 @@
+type: object
+properties:
+  alias:
+    $ref: '#/components/schemas/Alias'
+  role:
+    $ref: '#/components/schemas/Role'
+  app_name:
+    $ref: '#/components/schemas/AppName'
+  app_image_url:
+    $ref: '#/components/schemas/AppImage'
+required:
+  - role

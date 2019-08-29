@@ -1,0 +1,11 @@
+type: object
+properties:
+  func:
+    type: string
+    description: Name of the function specified in the SmartContract
+  args:
+    type: string
+    description: >-
+      JSON format string specifying function parameters and its values. The
+      accepted types are bool, int/uint, string, fixed/ufixed.
+    example: '[{"name": "yourParamName", "value":"yourParamValue"}]'

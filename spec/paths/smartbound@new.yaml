@@ -1,0 +1,27 @@
+post:
+  summary: Create a SmartBound
+  description: Submits smart contract information
+  tags:
+    - SmartBound
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/SmartBoundRequest'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                default: true
+              data:
+                $ref: '#/components/schemas/SmartBoundResponse'
+    '400':
+      $ref: '#/components/responses/BadRequest'
+    '401':
+      $ref: '#/components/responses/UnauthorizedError'

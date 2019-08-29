@@ -1,0 +1,22 @@
+get:
+  summary: List operations made
+  description: 'List paid invoices, withdrawals and authentication request done'
+  tags:
+    - Operations
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                default: true
+              data:
+                $ref: '#/components/schemas/OperationResponse'
+    '400':
+      $ref: '#/components/responses/BadRequest'
+    '401':
+      $ref: '#/components/responses/UnauthorizedError'

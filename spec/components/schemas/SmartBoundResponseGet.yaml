@@ -1,0 +1,14 @@
+type: object
+properties:
+  alias:
+    type: string
+  type:
+    type: string
+  capacity:
+    type: number
+  spent:
+    type: number
+  contractAddress:
+    type: string
+  abi:
+    type: string

@@ -1,0 +1,28 @@
+get:
+  summary: Get supported currencies
+  description: Receive the currencies that APItoshi can handle to issue payment requests.
+  tags:
+    - Currencies
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                default: true
+              data:
+                type: array
+                items:
+                  type: string
+                example:
+                  - name: BTC
+                  - name: EUR
+                  - name: USD
+    '400':
+      $ref: '#/components/responses/BadRequest'
+    '401':
+      $ref: '#/components/responses/UnauthorizedError'

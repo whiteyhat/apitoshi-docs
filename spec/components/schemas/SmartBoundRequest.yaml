@@ -1,0 +1,19 @@
+type: object
+properties:
+  alias:
+    type: string
+  type:
+    type: string
+    description: ETH or RSK
+  capacity:
+    type: number
+    description: Capacity withdrawed from your user balance
+  contractAddress:
+    type: string
+  abi:
+    type: string
+required:
+  - type
+  - balance
+  - contractAddress
+  - abi

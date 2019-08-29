@@ -1,0 +1,12 @@
+type: object
+properties:
+  type:
+    $ref: '#/components/schemas/BtcChain'
+  address:
+    $ref: '#/components/schemas/Address'
+  callback_url:
+    $ref: '#/components/schemas/CallbackUrl'
+required:
+  - type
+  - amount
+  - address

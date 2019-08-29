@@ -1,0 +1,36 @@
+post:
+  summary: Call SmartBound
+  description: >-
+    Call SmartContract through Lightning Network. It uses the balance assigned
+    for the computational cost.
+  tags:
+    - SmartBound
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: ID of the SmartBound
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/SmartBoundCallRequest'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                default: true
+              data:
+                $ref: '#/components/schemas/SmartBoundResponse'
+    '400':
+      $ref: '#/components/responses/BadRequest'
+    '401':
+      $ref: '#/components/responses/UnauthorizedError'

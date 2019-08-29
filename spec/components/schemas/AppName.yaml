@@ -1,0 +1,5 @@
+type: string
+example: Satoshis Games
+description: >-
+  Metadata about the platform/website where the API key is used. This field is
+  useful when the API key is used for lightning auth.

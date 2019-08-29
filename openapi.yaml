@@ -1,0 +1,738 @@
+openapi: 3.0.2
+info:
+  title: APItoshi
+  version: 1.0.0-beta
+  description: |
+    APItoshi is a toolbox based on Bitcoin and Lightning Network. 
+    It allows to process payments in Bitcoin, request authentications through digital signature
+    and call smart contracts in Lightning.
+    This API was launched the 28th of August in a Beta state.
+    # Cross-Origin Resource Sharing
+    APItoshi features Cross-Origin Resource Sharing (CORS) implemented in compliance with  [W3C spec](https://www.w3.org/TR/cors/).
+    And that allows cross-domain communication from the browser.
+    All responses have a wildcard same-origin which makes them completely public and accessible to everyone, including any code on any site.
+    # Authorization
+    <security-definitions />
+    # What is next
+    No custodial mode, along with refunds and more functionalities are planned to be added soon, prior to the first release by October.
+  x-logo:
+    url: 'https://apitoshi.s3.eu-west-2.amazonaws.com/apitoshi.svg'
+    backgroundColor: '#FFFFFF'
+    altText: APItoshi logo
+  contact:
+    name: Satoshis Games Team
+    email: info@satoshis.games
+    url: 'https://studio.satoshis.games/'
+servers:
+  - url: 'https://apitoshi.info'
+tags:
+  - name: Payments
+    description: APItoshi allow users to create payments seamlessly on lightning ⚡
+  - name: Withdrawals
+    description: "APItoshi allow users to create withdrawals easily on lightning or bitcoin \U0001F517"
+  - name: Currencies
+    description: "APItoshi allow users to receive real-time information about the allowed currencies to generate payments/withdrawals \U0001F4B1"
+  - name: Authentication
+    description: "APItoshi allow users to authenticate customers on their platform/app using a Lightning Auth based on reliable digital signatures \U0001F512"
+  - name: SmartBound
+    description: 'APItoshi Smart Bound brings an inter-operability to connect with other chain services using Bitcoin as the native fuel for APItoshis modules. Therefore, you can implementation smart contracts on the Lightning Network in a matter of minutes. This brings payments automatization that only occur under certain conditions, stream payments on predetermined time intervals that trigger other events once a payment is received. Such as bringing NFTs to lightning or automate chain processes through lightning triggers ⛓️'
+  - name: Operations
+    description: "APItoshi allow users to list transactions and other operations related to the platform \U0001F5D2️"
+security:
+  - ApiKeyAuth: []
+paths:
+  /auth/request:
+    post:
+      summary: Request Authentication - Digital Signature
+      description: Lightning authentication based on digital signature. The signature process is made through the APItoshi node. No-custodial mode will be available soon.
+      tags:
+        - Authentication
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                failureURL:
+                  type: string
+                  description: Callback in case of failure
+                successURL:
+                  type: string
+                  description: Callback in case of authentication success
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  data:
+                    $ref: '#/components/schemas/AuthResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /currencies:
+    get:
+      summary: Get supported currencies
+      description: Receive the currencies that APItoshi can handle to issue payment requests.
+      tags:
+        - Currencies
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  data:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - name: BTC
+                      - name: EUR
+                      - name: USD
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /operations:
+    get:
+      summary: List operations made
+      description: 'List paid invoices, withdrawals and authentication request done'
+      tags:
+        - Operations
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  data:
+                    $ref: '#/components/schemas/OperationResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  '/payment/{id}':
+    get:
+      summary: Get payment info
+      description: Receive information about a specific payment.
+      tags:
+        - Payments
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Id of the payment
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  data:
+                    $ref: '#/components/schemas/PaymentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /payments/new:
+    post:
+      summary: Create a payment request
+      description: Issue a payment request to receive bitcoin through Lightning or onchain
+      tags:
+        - Payments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  data:
+                    $ref: '#/components/schemas/PaymentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /payments/paid:
+    get:
+      description: List the paid invoices.
+      summary: Get paid payments
+      tags:
+        - Payments
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PaymentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  '/smartbound/{id}':
+    get:
+      summary: Get SmartBound information
+      description: Retrieves information about a SmartBound by its ID
+      tags:
+        - SmartBound
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the SmartBound
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  data:
+                    $ref: '#/components/schemas/SmartBoundResponseGet'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+    put:
+      summary: Update SmartBound
+      description: Updates amount and alias of a SmartBound
+      tags:
+        - SmartBound
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the SmartBound
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                alias:
+                  type: string
+                amount:
+                  type: number
+                  description: Amount to refill the SmartBound
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  data:
+                    type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+    delete:
+      summary: Delete SmartBound
+      description: Deletes a SmartBound by its ID
+      tags:
+        - SmartBound
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the SmartBound
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  data:
+                    type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  '/smartbound/call/{id}':
+    post:
+      summary: Call SmartBound
+      description: Call SmartContract through Lightning Network. It uses the balance assigned for the computational cost.
+      tags:
+        - SmartBound
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SmartBoundCallRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  data:
+                    $ref: '#/components/schemas/SmartBoundResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /smartbound/new:
+    post:
+      summary: Create a SmartBound
+      description: Submits smart contract information
+      tags:
+        - SmartBound
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SmartBoundRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  data:
+                    $ref: '#/components/schemas/SmartBoundResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /smartbounds:
+    get:
+      summary: List SmartBounds information
+      description: Retrieves information about all the SmartBounds associated you the API key
+      tags:
+        - SmartBound
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  data:
+                    $ref: '#/components/schemas/SmartBoundResponseGet'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /withdrawals:
+    get:
+      summary: Get list of withdrawals
+      description: List all of the successful withdrawals.
+      tags:
+        - Withdrawals
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WithdrawResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  '/withdrawals/{id}':
+    get:
+      summary: Get withdrawal info
+      description: Receive information about a specific withdrawal operation.
+      tags:
+        - Withdrawals
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Id of the withdrawal operation
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  data:
+                    $ref: '#/components/schemas/WithdrawResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /withdrawals/new:
+    post:
+      summary: Withdraw balance
+      description: Issue a withdrawal operation which extracts the funds to your Bitcoin wallet or through a lightnign invoice.
+      tags:
+        - Withdrawals
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WithdrawRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WithdrawResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+components:
+  schemas:
+    Address:
+      type: string
+      description: Bitcoin address/LN BOLT11 invoice
+      example: bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq
+    Alias:
+      type: string
+      description: API key alias
+      example: APItoshi Application Key
+    Amount:
+      type: number
+      format: double
+      example: 50
+      description: Amount in satoshi unless currency parameter is used.
+    ApiKeyRequest:
+      type: object
+      properties:
+        alias:
+          $ref: '#/components/schemas/Alias'
+        role:
+          $ref: '#/components/schemas/Role'
+        app_name:
+          $ref: '#/components/schemas/AppName'
+        app_image_url:
+          $ref: '#/components/schemas/AppImage'
+      required:
+        - role
+    ApiKeyResponse:
+      type: object
+      properties:
+        api_key:
+          type: string
+          example: b880d27b-794b-4967-910c-172d97e9e10c
+        role:
+          type: string
+          example: invoices
+    AppImage:
+      type: string
+      example: 'https://studio.satoshis.games/wp-content/uploads/2018/11/Fronte.png'
+      description: Metadata about the platform/website where the API key is used. This field is useful when the API key is used for lightning auth.
+    AppName:
+      type: string
+      example: Satoshis Games
+      description: Metadata about the platform/website where the API key is used. This field is useful when the API key is used for lightning auth.
+    AuthResponse:
+      type: object
+      properties:
+        authURL:
+          $ref: '#/components/schemas/AuthURL'
+    AuthURL:
+      type: string
+      description: URL for accessing the authentication request
+    BtcChain:
+      type: string
+      enum:
+        - onchain
+        - ln
+      description: On chain or Lightning
+    CallbackUrl:
+      type: string
+      example: 'https://example.com/callback'
+    Currency:
+      type: string
+      enum:
+        - BTC
+        - SAT
+        - EUR
+        - USD
+      default: SAT
+      example: USD
+    Description:
+      type: string
+      example: APItoshi payment
+      default: APItoshi payment
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          default: false
+        data:
+          type: object
+          properties:
+            message:
+              type: string
+    ExpirationTime:
+      type: number
+      format: integer
+      example: 60
+      description: Number of minutes to expire the payment request (60 min by default if no specified).
+      default: 60
+    LNInvoice:
+      type: object
+      properties:
+        expires_at:
+          type: number
+        pay_req:
+          type: string
+    Operation:
+      type: object
+      properties:
+        id:
+          type: string
+        created_at:
+          type: string
+        status:
+          type: string
+        amount:
+          type: number
+        type:
+          type: string
+          example: Invoice
+    OperationResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/Operation'
+    PaymentRequest:
+      type: object
+      properties:
+        description:
+          $ref: '#/components/schemas/Description'
+        amount:
+          $ref: '#/components/schemas/Amount'
+        expirationTime:
+          $ref: '#/components/schemas/ExpirationTime'
+        currency:
+          $ref: '#/components/schemas/Currency'
+        callback_url:
+          $ref: '#/components/schemas/CallbackUrl'
+        success_url:
+          $ref: '#/components/schemas/CallbackUrl'
+    PaymentResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        description:
+          type: string
+        created_at:
+          type: number
+        status:
+          $ref: '#/components/schemas/TxStatus'
+        amount:
+          $ref: '#/components/schemas/Amount'
+        currency:
+          $ref: '#/components/schemas/Currency'
+        fiat_value:
+          type: number
+        lightning_invoice:
+          $ref: '#/components/schemas/LNInvoice'
+        chain_invoice:
+          type: object
+          properties:
+            address:
+              $ref: '#/components/schemas/Address'
+    Role:
+      type: string
+      example: withdrawals
+      default: invoices
+      description: Permission role for the restrictive access of the API key. Options are invoices or withdrawals.
+    SmartBoundCallRequest:
+      type: object
+      properties:
+        func:
+          type: string
+          description: Name of the function specified in the SmartContract
+        args:
+          type: string
+          description: 'JSON format string specifying function parameters and its values. The accepted types are bool, int/uint, string, fixed/ufixed.'
+          example: '[{"name": "yourParamName", "value":"yourParamValue"}]'
+    SmartBoundRequest:
+      type: object
+      properties:
+        alias:
+          type: string
+        type:
+          type: string
+          description: ETH or RSK
+        capacity:
+          type: number
+          description: Capacity withdrawed from your user balance
+        contractAddress:
+          type: string
+        abi:
+          type: string
+      required:
+        - type
+        - balance
+        - contractAddress
+        - abi
+    SmartBoundResponse:
+      type: object
+      properties:
+        smartBoundId:
+          type: string
+          example: b880d27b-794b-4967-910c-172d97e9e10c
+    SmartBoundResponseGet:
+      type: object
+      properties:
+        alias:
+          type: string
+        type:
+          type: string
+        capacity:
+          type: number
+        spent:
+          type: number
+        contractAddress:
+          type: string
+        abi:
+          type: string
+    TxStatus:
+      type: string
+      enum:
+        - unpaid
+        - paid
+        - processing
+    WithdrawRequest:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/BtcChain'
+        address:
+          $ref: '#/components/schemas/Address'
+        callback_url:
+          $ref: '#/components/schemas/CallbackUrl'
+      required:
+        - type
+        - amount
+        - address
+    WithdrawResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          $ref: '#/components/schemas/BtcChain'
+        amount:
+          $ref: '#/components/schemas/Amount'
+        status:
+          $ref: '#/components/schemas/TxStatus'
+        wallet:
+          type: string
+        processed_at:
+          type: number
+        chain_invoice:
+          type: object
+          properties:
+            tx:
+              type: string
+              example: 4ef47f6eb681d5d9fa2f7e16336cd629303c635e8da51e425b76088be9c8744c
+      required:
+        - type
+        - amount
+        - address
+  responses:
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnauthorizedError:
+      description: API key is missing or invalid
+  securitySchemes:
+    ApiKeyAuth:
+      description: 'An API key is required to authorize requests with a specific role. If you don''t have an API key, please register on Elixir.'
+      type: http
+      scheme: bearer

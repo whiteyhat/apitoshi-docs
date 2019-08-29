@@ -1,0 +1,7 @@
+type: number
+format: integer
+example: 60
+description: >-
+  Number of minutes to expire the payment request (60 min by default if no
+  specified).
+default: 60

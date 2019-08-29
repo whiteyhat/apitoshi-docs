@@ -1,0 +1,68 @@
+openapi: 3.0.2
+info:
+  title: APItoshi
+  version: 1.0.0-beta
+  description: >
+    APItoshi is a toolbox based on Bitcoin and Lightning Network. 
+
+    It allows to process payments in Bitcoin, request authentications through
+    digital signature
+
+    and call smart contracts in Lightning.
+
+    This API was launched the 28th of August in a Beta state.
+
+    # Cross-Origin Resource Sharing
+
+    APItoshi features Cross-Origin Resource Sharing (CORS) implemented in
+    compliance with  [W3C spec](https://www.w3.org/TR/cors/).
+
+    And that allows cross-domain communication from the browser.
+
+    All responses have a wildcard same-origin which makes them completely public
+    and accessible to everyone, including any code on any site.
+
+    # Authorization
+
+    <security-definitions />
+
+    # What is next
+
+    No custodial mode, along with refunds and more functionalities are planned
+    to be added soon, prior to the first release by October.
+  x-logo:
+    url: 'https://apitoshi.s3.eu-west-2.amazonaws.com/apitoshi.svg'
+    backgroundColor: '#FFFFFF'
+    altText: APItoshi logo
+  contact:
+    name: Satoshis Games Team
+    email: info@satoshis.games
+    url: 'https://studio.satoshis.games/'
+servers:
+  - url: 'https://apitoshi.info'
+    description: Future URL
+  - url: 'https://57efa5ynx9.execute-api.eu-west-2.amazonaws.com/prod'
+    description: Default URL
+tags:
+  - name: Payments
+    description: APItoshi allow users to create payments seamlessly on lightning ⚡
+  - name: Withdrawals
+    description: "APItoshi allow users to create withdrawals easily on lightning or bitcoin \U0001F517"
+  - name: Currencies
+    description: "APItoshi allow users to receive real-time information about the allowed currencies to generate payments/withdrawals \U0001F4B1"
+  - name: Authentication
+    description: "APItoshi allow users to authenticate customers on their platform/app using a Lightning Auth based on reliable digital signatures \U0001F512"
+  - name: SmartBound
+    description: >-
+      APItoshi Smart Bound brings an inter-operability to connect with other
+      chain services using Bitcoin as the native fuel for APItoshis modules.
+      Therefore, you can implementation smart contracts on the Lightning Network
+      in a matter of minutes. This brings payments automatization that only
+      occur under certain conditions, stream payments on predetermined time
+      intervals that trigger other events once a payment is received. Such as
+      bringing NFTs to lightning or automate chain processes through lightning
+      triggers ⛓️
+  - name: Operations
+    description: "APItoshi allow users to list transactions and other operations related to the platform \U0001F5D2️"
+security:
+  - ApiKeyAuth: []

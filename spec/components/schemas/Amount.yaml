@@ -1,0 +1,4 @@
+type: number
+format: double
+example: 50
+description: Amount in satoshi unless currency parameter is used.

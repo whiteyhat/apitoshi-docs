@@ -1,0 +1,8 @@
+type: string
+enum:
+  - BTC
+  - SAT
+  - EUR
+  - USD
+default: SAT
+example: USD

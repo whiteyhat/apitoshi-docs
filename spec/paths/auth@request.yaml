@@ -1,0 +1,36 @@
+post:
+  summary: Request Authentication - Digital Signature
+  description: >-
+    Lightning authentication based on digital signature. The signature process
+    is made through the APItoshi node. No-custodial mode will be available soon.
+  tags:
+    - Authentication
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            failureURL:
+              type: string
+              description: Callback in case of failure
+            successURL:
+              type: string
+              description: Callback in case of authentication success
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                default: true
+              data:
+                $ref: '#/components/schemas/AuthResponse'
+    '400':
+      $ref: '#/components/responses/BadRequest'
+    '401':
+      $ref: '#/components/responses/UnauthorizedError'

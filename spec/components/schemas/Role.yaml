@@ -1,0 +1,6 @@
+type: string
+example: withdrawals
+default: invoices
+description: >-
+  Permission role for the restrictive access of the API key. Options are
+  invoices or withdrawals.
