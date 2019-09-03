@@ -24,9 +24,7 @@ info:
     email: info@satoshis.games
     url: 'https://studio.satoshis.games/'
 servers:
-  - url: 'https://apitoshi.info'
-    description: Future URL
-  - url: 'https://57efa5ynx9.execute-api.eu-west-2.amazonaws.com/prod'
+  - url: 'https://api.apitoshi.com'
     description: Default URL
 tags:
   - name: Payments

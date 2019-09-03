@@ -1,8 +1,8 @@
 {
   "_from": "swagger-ui-dist@^3.20.1",
-  "_id": "swagger-ui-dist@3.23.6",
+  "_id": "swagger-ui-dist@3.23.8",
   "_inBundle": false,
-  "_integrity": "sha512-fQvjwnezUed1JHNtqudePjgWUl+GuUiI9l+8i/FjAEIZugkiDV2bS0mf+lKRphBjDcifKs0gGpqswJLcOxAfbA==",
+  "_integrity": "sha512-9qs+hTveKA8UAAe9k8/E8Tg67KYvSs9xSq5K0PByzC/cYqE+kcDS6hBmEStNQx1xfOJE+Rx+jZAYAQ1c5I10+Q==",
   "_location": "/swagger-ui-dist",
   "_phantomChildren": {},
   "_requested": {
@@ -16,12 +16,12 @@
     "fetchSpec": "^3.20.1"
   },
   "_requiredBy": [
-    "/swagger-repo"
+    "/create-openapi-repo/swagger-repo"
   ],
-  "_resolved": "https://registry.npmjs.org/swagger-ui-dist/-/swagger-ui-dist-3.23.6.tgz",
-  "_shasum": "b0a6c8f7c6bb17a279ec7ab445a78185fdef9c7c",
+  "_resolved": "https://registry.npmjs.org/swagger-ui-dist/-/swagger-ui-dist-3.23.8.tgz",
+  "_shasum": "f0101144a07796856c513e8f50262e374b12ac11",
   "_spec": "swagger-ui-dist@^3.20.1",
-  "_where": "/Users/whiteyhat/Documents/GitHub/apitoshi-docs/node_modules/swagger-repo",
+  "_where": "/Users/whiteyhat/Documents/GitHub/apitoshi-docs/node_modules/create-openapi-repo/node_modules/swagger-repo",
   "bugs": {
     "url": "https://github.com/swagger-api/swagger-ui/issues"
   },
@@ -67,5 +67,5 @@
     "type": "git",
     "url": "git+ssh://git@github.com/swagger-api/swagger-ui.git"
   },
-  "version": "3.23.6"
+  "version": "3.23.8"
 }
