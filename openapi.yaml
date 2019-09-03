@@ -20,9 +20,9 @@ info:
     backgroundColor: '#FFFFFF'
     altText: APItoshi logo
   contact:
-    name: Satoshis Games Team
-    email: info@satoshis.games
-    url: 'https://studio.satoshis.games/'
+    name: APItoshi Team
+    email: hello@apitoshi.com
+    url: 'https://t.me/APItoshi'
 servers:
   - url: 'https://api.apitoshi.com'
     description: Default URL
