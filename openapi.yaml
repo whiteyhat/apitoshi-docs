@@ -21,10 +21,12 @@ info:
     altText: APItoshi logo
   contact:
     name: APItoshi Team
-    email: hello@apitoshi.com
+    email: hi@apitoshi.com
     url: 'https://t.me/APItoshi'
 servers:
   - url: 'https://api.apitoshi.com'
+    description: Future URL
+  - url: 'https://57efa5ynx9.execute-api.eu-west-2.amazonaws.com/prod'
     description: Default URL
 tags:
   - name: Payments
